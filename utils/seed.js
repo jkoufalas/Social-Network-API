@@ -1,35 +1,62 @@
-const connection = require('../config/connection');
-const { User, Video } = require('../models');
-const { getRandomName, getRandomVideos } = require('./data');
+const connection = require("../config/connection");
+const { User, Thought } = require("../models");
+const {
+  getRandomName,
+  getRandomThought,
+  getRandomReaction,
+  usernamesList,
+} = require("./data");
+const ObjectId = require("mongodb").ObjectId;
 
-connection.on('error', (err) => err);
+connection.on("error", (err) => err);
 
-connection.once('open', async () => {
-  console.log('connected');
-  await Video.deleteMany({});
+connection.once("open", async () => {
+  console.log("connected");
+  await Thought.deleteMany({});
   await User.deleteMany({});
 
-  const users = [];
-  const videos = getRandomVideos(10);
+  let userIDs = [];
+
+  let user;
 
   for (let i = 0; i < 20; i++) {
-    const fullName = getRandomName();
-    const first = fullName.split(' ')[0];
-    const last = fullName.split(' ')[1];
+    const username = getRandomName(i);
+    const email = `${username}@email.com`;
+    const thoughtText = getRandomThought();
 
-    users.push({
-      first,
-      last,
-      age: Math.floor(Math.random() * (99 - 18 + 1) + 18),
+    const reactionData = {
+      reactionBody: getRandomReaction(),
+      username: getRandomName(Math.floor(Math.random() * usernamesList.length)),
+    };
+
+    let newThought = await Thought.create({
+      thoughtText: thoughtText,
+      username: username,
+      reactions: reactionData,
     });
+
+    let friend = userIDs[Math.floor(Math.random() * userIDs.length)];
+    user = {
+      username,
+      email,
+    };
+
+    let newUser = await User.create(user);
+    userIDs.push(newUser._id);
+    await User.findOneAndUpdate(
+      { _id: newUser._id },
+      { $addToSet: { thoughts: newThought._id } },
+      { new: true }
+    );
+    await User.findOneAndUpdate(
+      { _id: newUser._id },
+      { $addToSet: { friends: ObjectId(friend) } },
+      { new: true }
+    );
   }
 
-  await User.collection.insertMany(users);
-  await Video.collection.insertMany(videos);
-
   // loop through the saved videos, for each video we need to generate a video response and insert the video responses
-  console.table(users);
-  console.table(videos);
-  console.info('Seeding complete! 🌱');
+  console.info("Seeding complete! 🌱");
+  console.log(userIDs);
   process.exit(0);
 });
