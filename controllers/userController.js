@@ -1,8 +1,12 @@
+//imports models
 const User = require("../models/User");
 const Thought = require("../models/Thought");
-const ObjectId = require("mongodb").ObjectId;
 
+//exports functions for use in routes
 module.exports = {
+  //get user function
+  // finds all users from user collection
+  // where object id for thoughts and friends, populate with linked data from those collections
   getUsers(req, res) {
     User.find()
       .select("-__v")
@@ -14,6 +18,9 @@ module.exports = {
         res.status(500).json(err);
       });
   },
+  //get a single user function
+  // finds a single users from user collection
+  // where object id for thoughts and friends, populate with linked data from those collections
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
@@ -35,7 +42,7 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-
+  // updates a user from userid in parameters and uses body data to update
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -43,6 +50,7 @@ module.exports = {
       { new: true }
     )
       .then((user) =>
+        //if a user was modified
         !user
           ? res.status(404).json({
               message: "Found no User with that ID",
@@ -55,6 +63,7 @@ module.exports = {
       });
   },
 
+  // deletes a user using the paramater userId
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) => {
@@ -72,6 +81,9 @@ module.exports = {
       });
   },
 
+  //adds to friends to users friends list
+  //use friendId as the user Id for the friend
+  //use userId as the users Id
   createFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -85,6 +97,9 @@ module.exports = {
       });
   },
 
+  //removes friend from a users friends list
+  //use friendId as the user Id for the friend
+  //use userId as the users Id
   deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
