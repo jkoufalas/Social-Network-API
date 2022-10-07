@@ -61,13 +61,14 @@ module.exports = {
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) => {
-        console.log(user);
-        console.log(user.thoughts);
         !user
           ? res.status(404).json({ message: "No user with this id!" })
-          : Thought.deleteMany({ _id: user.thoughts }).then((dbThoughtData) =>
-              res.json("Updated the User 🎉")
-            );
+          : Thought.deleteMany({ _id: user.thoughts }).then((dbThoughtData) => {
+              console.log(dbThoughtData);
+              !dbThoughtData.deletedCount
+                ? res.json("Deleted the User 🎉")
+                : res.json("Deleted the User and all associated Thoughts 🎉");
+            });
       })
       .catch((err) => {
         console.log(err);

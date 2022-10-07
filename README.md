@@ -129,64 +129,58 @@ Express.js is used to interact to the database using the routes
 }
 ```
 
-- Put /api/users/:usedId, modifies a user with usedId
+- Put /api/users/:usedId, modifies a user data with usedId
 
 ```
-   {
-   "category_name": "Jackets"
-   }
-```
-
-- delete /api/categories/:id, deletes a category with id
-
-- Get /api/products, returns all products with categories and tags
-- Get /api/products/:id where the id is for a singular product id, returns a single product with categories and tags
-- Post /api/products, creates a product
-
-```
-   {
-     "product_name": "hooded jacket denim",
-     "price": 150.00,
-     "stock": 7,
-     "tagIds": [2, 4, 5],
-	  "category_id": 2
+{
+  "username": "Aaran1",
+  "email": "aaran@email.com"
 }
 ```
 
-- Put /api/products/:id, modifies a product with id
+- delete /api/users/:usedId, deletes a user with id, it will also delete all their associated thoughts
+
+- Get /api/thoughts, returns all thoughts
+- Get /api/thoughts/:thoughtid where the thoughtid is for a singular thought, returns a single thoughts
+- Post /api/thoughts, creates a thought and uses the userId to assign it to a user.
 
 ```
-   {
-     "product_name": "hooded jacket",
-     "price": 150.00,
-     "stock": 7,
-     "tagIds": [3, 2, 4]
-   }
+{
+  "thoughtText": "Here's a cool thought...",
+  "username": "larantino121",
+  "userId": "633f95fb2f6dd81998c3cb6f"
+}
 ```
 
-- delete /api/products/:id, deletes a products with id
-
-- Get /api/tags, returns all tags with products
-- Get /api/tags/:id where the id is for a singular product id, returns a single tag with products
-- Post /api/tags, creates a tag
+- Put /api/thoughts/:thoughtid, updates a thought with the data by using the thoughtid
 
 ```
-	{
-     "tag_name": "street",
-     "productIds": [1, 3, 4]
-   }
+{
+  "thoughtText": "Here's a NEW cool thought..."
+}
 ```
 
-- Put /api/tags/:id, modifies a tag with id
+- delete /api/thoughts/:thoughtid, deletes a thought with thoughtid
+
+- Post /api/users/:userId/friends/:friendId, adds a friend (another user) using friendId as a friend to user with userId
+- delete /api/users/:userId/friends/:friendId, removes the friend (another user) using friendId as a friend to user with userId
+
+- Post /api/thoughts/:thoughtId/reactions, creates a reaction and adds it to a thought using thoughtId
 
 ```
-   {
-     "tag_name": "street",
-     "productIds": [1, 3, 4]
-   }
+{
+	"reactionBody": "wild stuff",
+	"username": "Zen"
+}
 ```
 
-- delete /api/tags/:id, deletes a tags with id
+- delete /api/thoughts/:thoughtId/reactions, removes the reaction from a thought
+
+```
+{
+	"reactionId": "633f8856fac2922b7dad11a9"
+}
+```
 
 ## Video Demo
 
@@ -198,23 +192,27 @@ The demonstration video covers the following.
 
 - The install instructions.
 - How to run the application.
-- A walkthrough of all the API calls for Categories, Products and Tags
+- A walkthrough of all the API calls for Users, Thoughts, Friends and Reactions
 
 ---
 
 ## Screen Shots
 
-![Get Categories](./assets/images/get-categories.png)
-![Get Categories by id](./assets/images/get-categories-by-id.png)
-![POST categories](./assets/images/post-categories.png)
-![PUT Categories](./assets/images/put-categories.png)
-![Get Products](./assets/images/get-products.png)
-![Get Products by id](./assets/images/get-products-by-id.png)
-![POST Products](./assets/images/post-products.png)
-![PUT Products](./assets/images/put-products.png)
-![Get Tags](./assets/images/get-tags.png)
-![Get Tags by id](./assets/images/get-tags-by-id.png)
-![POST Tags](./assets/images/post-tags.png)
-![PUT Tags](./assets/images/put-tags.png)
+![Get Users](./assets/images/get-categories.png)
+![Get Users by id](./assets/images/get-categories-by-id.png)
+![POST User](./assets/images/post-categories.png)
+![PUT User](./assets/images/put-categories.png)
+![Delete User](./assets/images/put-categories.png)
+
+![Get Thoughts](./assets/images/get-products.png)
+![Get Thought by id](./assets/images/get-products-by-id.png)
+![POST Thought](./assets/images/post-products.png)
+![PUT Thought](./assets/images/put-products.png)
+![Delete Thought](./assets/images/put-categories.png)
+
+![POST Friend](./assets/images/get-tags.png)
+![DELETE Friend](./assets/images/get-tags-by-id.png)
+![POST Reaction](./assets/images/post-tags.png)
+![Delete Reaction](./assets/images/put-tags.png)
 
 ---
