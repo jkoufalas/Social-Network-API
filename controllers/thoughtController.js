@@ -4,7 +4,6 @@ const ObjectId = require("mongodb").ObjectId;
 
 module.exports = {
   getThought(req, res) {
-    console.log(`got here`);
     Thought.find()
       .select("-__v")
       .then((dbThoughtData) => res.json(dbThoughtData))
@@ -47,7 +46,6 @@ module.exports = {
   },
 
   updateThought(req, res) {
-    console.log(req.body);
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },

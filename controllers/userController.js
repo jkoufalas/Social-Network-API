@@ -4,7 +4,6 @@ const ObjectId = require("mongodb").ObjectId;
 
 module.exports = {
   getUsers(req, res) {
-    console.log(`got here`);
     User.find()
       .select("-__v")
       .populate("thoughts")
@@ -29,7 +28,6 @@ module.exports = {
   },
   // create a new user
   createUser(req, res) {
-    console.log(req.body);
     User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => {
@@ -39,7 +37,6 @@ module.exports = {
   },
 
   updateUser(req, res) {
-    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body },
@@ -64,7 +61,6 @@ module.exports = {
         !user
           ? res.status(404).json({ message: "No user with this id!" })
           : Thought.deleteMany({ _id: user.thoughts }).then((dbThoughtData) => {
-              console.log(dbThoughtData);
               !dbThoughtData.deletedCount
                 ? res.json("Deleted the User 🎉")
                 : res.json("Deleted the User and all associated Thoughts 🎉");

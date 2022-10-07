@@ -57,6 +57,5 @@ connection.once("open", async () => {
 
   // loop through the saved videos, for each video we need to generate a video response and insert the video responses
   console.info("Seeding complete! 🌱");
-  console.log(userIDs);
   process.exit(0);
 });

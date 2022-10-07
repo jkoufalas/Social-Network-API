@@ -45,12 +45,12 @@ const thoughtSchema = new Schema(
 );
 
 // Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
-/* thoughtSchema
+thoughtSchema
   .virtual("reactionCount")
   // Getter
   .get(function () {
-    return `${this.reactions.length()}`;
-  }); */
+    return `${this.reactions.length}`;
+  });
 
 // Initialize our Video model
 const Thought = model("thought", thoughtSchema);
