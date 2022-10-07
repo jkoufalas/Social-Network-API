@@ -198,21 +198,60 @@ The demonstration video covers the following.
 
 ## Screen Shots
 
-![Get Users](./assets/images/get-categories.png)
-![Get Users by id](./assets/images/get-categories-by-id.png)
-![POST User](./assets/images/post-categories.png)
-![PUT User](./assets/images/put-categories.png)
-![Delete User](./assets/images/put-categories.png)
+### Get Users
 
-![Get Thoughts](./assets/images/get-products.png)
-![Get Thought by id](./assets/images/get-products-by-id.png)
-![POST Thought](./assets/images/post-products.png)
-![PUT Thought](./assets/images/put-products.png)
-![Delete Thought](./assets/images/put-categories.png)
+![Get Users](./assets/getUsers.png)
 
-![POST Friend](./assets/images/get-tags.png)
-![DELETE Friend](./assets/images/get-tags-by-id.png)
-![POST Reaction](./assets/images/post-tags.png)
-![Delete Reaction](./assets/images/put-tags.png)
+### Get Users by id
+
+![Get Users by id](./assets/getSingleUser.png)
+
+### POST User
+
+![POST User](./assets/newUser.png)
+
+### PUT User
+
+![PUT User](./assets/updateUser.png)
+
+### Delete User
+
+![Delete User](./assets/deleteUser.png)
+
+### Get Thoughts
+
+![Get Thoughts](./assets/getThoughts.png)
+
+### Get Thought by id
+
+![Get Thought by id](./assets/getSingleThought.png)
+
+### POST Thought
+
+![POST Thought](./assets/newThought.png)
+
+### PUT Thought
+
+![PUT Thought](./assets/updateThought.png)
+
+### Delete Thought
+
+![Delete Thought](./assets/deleteThought.png)
+
+### POST Friend
+
+![POST Friend](./assets/newFriend.png)
+
+### DELETE Friend
+
+![DELETE Friend](./assets/deleteFriend.png)
+
+### POST Reaction
+
+![POST Reaction](./assets/newReaction.png)
+
+### Delete Reaction
+
+![Delete Reaction](./assets/deleteReaction.png)
 
 ---
