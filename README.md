@@ -64,53 +64,72 @@ npm i
 node index.js
 ```
 
-Utilize the command prompts and the application will prompt you for any information it needs to fullfill the requests you have made.
-
----
+## This will start the application on the server and connect it to the MongoDB database.
 
 ## Database Information
 
-The user must have a MySQL database installed on the machine they are running the application on.
+The user must have a MongoDB database installed on the machine they are running the application on.
 
-The schema for the database is included in the db folder and can be included by running the command
-
-```
-mysql> source db/schema.sql
-```
-
-The seed data if required can be inserted into the database by using the index.js file in the seeds folder and inserted by running the command.
+The connection.js file located in the /config folder is what is used to connect to MongoDB and the database within it.
+The database is named socialNetwork and the connection string used is.
 
 ```
-> node seeds/index.js
+mongodb://localhost/socialNetwork
 ```
 
-The information used to connect to the database is currently implemented with the dotenv package. To include the correct information to connect to the database corretly the following the user needs to create a .env file and add the following data.
+The seed data if required can be inserted into the database by using the command
 
 ```
-    DB_NAME="ecommerce_db"
-    DB_PW="your_password"
-    DB_USER="your_user"
+npm run seed
 ```
 
-If the user doesn't want to use the dotenv package, then they can simply replace these variable in the server.js file with the hard coded values that these variables are storing.
+There are 2 Models used within the database
 
----
+### Users
+
+This has the following keys
+
+- username - Of type string. This is a required field must be unique.
+- email - Of type string. This is a required field must be unique.
+- thoughts - Array of \_id values referencing the Thought model.
+- friends - Array of \_id values referencing the User model (self-reference)
+- virtual - friendCount - that retrieves the length of the user's friends array field on query.
+
+### Thought
+
+- thoughtText - Of type string. This is a required field and must have a length between 1 and 280 characters.
+- createdAt - Of typr Date. Set by default as the current time when created.
+- username - Of type string. This is a required field.
+- reaction - Array of nested documents created with the reactionSchema
+- virtual - reactionCount - that retrieves the length of the thought's reactions array field on query.
+
+There is 1 Schema used
+
+### Reaction
+
+- reactionId - Default value is set to a new ObjectId.
+- reactionBody - Of type string. This is a required field.
+- username - Of type string. This is a required field.
+- createdAt - Of typr Date. Set by default as the current time when created.
 
 ## Express API Information
 
 Express.js is used to interact to the database using the routes
 
-- Get /api/categories, returns all categories
-- Get /api/categories/:id where the id is for a singular category id, returns a single category
-- Post /api/categories, creates a categories
+### User Routes
+
+- Get /api/users, returns all users
+- Get /api/users/:usedId where the id is for a singular user id, returns a single users information
+- Post /api/users, creates a user
 
 ```
-   {
-   "category_name": "Jackets"
-   }
+{
+  "username": "lernantino121",
+  "email": "lernantino121@gmail.com"
+}
 ```
 
-- Put /api/categories/:id, modifies a category with id
+- Put /api/users/:usedId, modifies a user with usedId
 
 ```
    {
