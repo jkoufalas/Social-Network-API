@@ -1,7 +1,8 @@
 const { Schema, model } = require("mongoose");
 const Reaction = require("./Reaction");
 
-function formatDate(createdAt) {
+//formats the date for the query return
+function formatThoughtDate(createdAt) {
   return (
     [
       createdAt.getDate(),
@@ -27,7 +28,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: formatDate,
+      get: formatThoughtDate,
     },
     username: {
       type: String,
@@ -51,6 +52,10 @@ thoughtSchema
   .get(function () {
     return `${this.reactions.length}`;
   });
+
+//making sure that the getters are being used in queries
+thoughtSchema.set("toObject", { getters: true });
+thoughtSchema.set("toJSON", { getters: true });
 
 // Initialize our Video model
 const Thought = model("thought", thoughtSchema);

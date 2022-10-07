@@ -7,7 +7,7 @@ module.exports = {
   //get thought function
   // finds all thoughts from thought collection
   getThought(req, res) {
-    Thought.find()
+    Thought.find({ options: { getters: true } })
       .select("-__v")
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => {
@@ -35,7 +35,7 @@ module.exports = {
         return User.findOneAndUpdate(
           { _id: req.body.userId },
           { $addToSet: { thoughts: dbThoughtData._id } },
-          { new: true }
+          { runValidators: true, new: true }
         );
       })
       .then((user) =>
@@ -55,7 +55,7 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
-      { new: true }
+      { runValidators: true, new: true }
     )
       .then((dbThoughtData) =>
         !dbThoughtData
@@ -88,7 +88,7 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
-      { new: true }
+      { runValidators: true, new: true }
     )
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => {
@@ -102,7 +102,7 @@ module.exports = {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.body.reactionId } } },
-      { new: true }
+      { runValidators: true, new: true }
     )
       .then((dbThoughtData) => {
         res.json(dbThoughtData);

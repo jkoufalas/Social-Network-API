@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const validateEmail = (email) => {
-  const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const regex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   return regex.test(email);
 };
 
@@ -24,7 +24,7 @@ const userSchema = new Schema(
       validate: [validateEmail, "Please fill a valid email address"],
       //match is used to validate when save is used
       match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
         "Please fill a valid email address",
       ],
     },
@@ -59,6 +59,15 @@ userSchema
   .get(function () {
     return `${this.friends.length}`;
   });
+
+userSchema.path("email").set(function (email) {
+  const regex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  if (regex.test(email)) {
+    return email;
+  } else {
+    throw "Please fill a valid email address";
+  }
+});
 
 // Initialize our User model
 const User = model("user", userSchema);
